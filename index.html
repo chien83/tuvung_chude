@@ -795,7 +795,7 @@
 
       const utterance = new SpeechSynthesisUtterance(word);
       utterance.lang = lang;
-      utterance.rate = 1;
+      utterance.rate = 0.85;
 
       if (synthVoices.length === 0) {
         synthVoices = window.speechSynthesis.getVoices();
