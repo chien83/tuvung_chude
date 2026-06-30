@@ -23,7 +23,7 @@
     body {
       margin: 0;
       min-height: 100vh;
-      /* Đã cập nhật font-family để khắc phục lỗi chữ to chữ trong tiếng Việt */
+      /* Đã cập nhật font-family để khắc phục lỗi chữ to chữ nhỏ trong tiếng Việt */
       font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       color: var(--text);
       background: linear-gradient(180deg, #eaf7ff 0%, #f7fbff 48%, #f1f8ee 100%);
@@ -617,21 +617,227 @@
     }
 
     @media (max-width: 820px) {
-      .topbar, .layout {
-        grid-template-columns: 1fr;
+      .app {
+        width: 100%;
+        padding: 6px 6px 14px;
       }
 
+      .topbar {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 6px;
+      }
+
+      .topbar > div:first-child {
+        display: none;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      .pill {
+        width: auto;
+        min-height: 30px;
+        justify-content: center;
+        padding: 5px 11px;
+        font-size: 14px;
+        box-shadow: 0 5px 14px rgba(15, 23, 42, .07);
+      }
+
+      .layout {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      /* Trên điện thoại: ưu tiên khung học chính lên trước */
+      .game {
+        order: 1;
+        border-radius: 16px;
+      }
+
+      /* Khung chọn bài đưa xuống dưới và thu gọn */
       .panel {
+        order: 2;
         position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        padding: 10px;
+        border-radius: 14px;
+      }
+
+      .panel-head {
+        grid-column: 1 / -1;
+        margin: 0;
+      }
+
+      .panel-head h2 {
+        font-size: 14px;
+      }
+
+      .back-home-btn {
+        min-height: 30px;
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+
+      .status,
+      .word-list,
+      label {
+        display: none;
+      }
+
+      #topicSelect,
+      #lessonSelect {
+        min-height: 36px;
+        padding: 6px 9px;
+        border-radius: 10px;
+        font-size: 14px;
+      }
+
+      .skill-tabs {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 6px;
+        margin: 0;
+      }
+
+      .skill-tabs button {
+        min-height: 34px;
+        padding: 6px 4px;
+        border-radius: 10px;
+        font-size: 14px;
+      }
+
+      .progress-wrap {
+        padding: 8px 12px 0;
+      }
+
+      .progress {
+        height: 8px;
+      }
+
+      .stage {
+        padding: 8px;
       }
 
       .task {
-        min-height: 500px;
-        padding: 18px 12px;
+        width: 100%;
+        min-height: calc(100svh - 72px);
+        gap: 10px;
+        padding: 14px 10px;
+        border-radius: 18px;
+        align-content: center;
       }
 
-      .choices, .answer-row {
+      .mode {
+        padding: 6px 10px;
+        font-size: 14px;
+      }
+
+      .question {
+        font-size: 18px;
+        line-height: 1.32;
+      }
+
+      .task-image {
+        width: min(220px, 76vw);
+        height: min(170px, 48vw);
+      }
+
+      .spin-hint {
+        bottom: 7px;
+        font-size: 11px;
+        padding: 5px 7px;
+      }
+
+      .word-display {
+        min-width: min(300px, 96%);
+        padding: 9px 11px;
+        font-size: 24px;
+        line-height: 1.16;
+      }
+
+      .word-display.has-replay {
+        gap: 8px;
+      }
+
+      .replay-word-btn {
+        min-height: 34px;
+        padding: 7px 10px;
+        font-size: 13px;
+      }
+
+      .meaning {
+        margin-top: -4px;
+        font-size: 14px;
+        line-height: 1.32;
+      }
+
+      #answerArea {
+        width: 100%;
+        display: grid;
+        place-items: center;
+      }
+
+      .choices {
+        width: min(300px, 100%);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .choice {
+        min-height: 50px;
+        padding: 9px;
+        border-radius: 13px;
+      }
+
+      .answer-row {
+        width: min(320px, 100%);
         grid-template-columns: 1fr;
+      }
+
+      .feedback {
+        min-height: 22px;
+        font-size: 14px;
+      }
+
+      .home-hero {
+        margin-bottom: 12px;
+        padding: 12px;
+        border-radius: 18px;
+      }
+
+      .home-hero h1 {
+        font-size: 22px;
+      }
+
+      .home-actions {
+        margin-bottom: 14px;
+      }
+
+      .home-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .topic-card {
+        min-height: 190px;
+        padding: 12px 8px 10px;
+        border-radius: 16px;
+      }
+
+      .topic-img {
+        width: 76px;
+        height: 66px;
+      }
+
+      .topic-name {
+        font-size: 18px;
       }
     }
   </style>
@@ -643,7 +849,6 @@
         <h1>Từ vựng theo chủ đề</h1>
       </div>
       <div class="home-actions">
-        <button type="button" class="home-button" id="homeStartBtn">Vào bài đang chọn</button>
         <span class="pill" id="homeStatusText">Đang tải dữ liệu...</span>
       </div>
       <div class="home-grid" id="topicCards"></div>
@@ -739,7 +944,6 @@
       lessonView: document.getElementById("lessonView"),
       topicCards: document.getElementById("topicCards"),
       homeStatusText: document.getElementById("homeStatusText"),
-      homeStartBtn: document.getElementById("homeStartBtn"),
       backHomeBtn: document.getElementById("backHomeBtn"),
       statusText: document.getElementById("statusText"),
       topicSelect: document.getElementById("topicSelect"),
@@ -1728,7 +1932,6 @@ function playSpinSound() {
       renderTask();
     }
 
-    els.homeStartBtn.onclick = () => openLessonView(state.topicIndex, state.lessonIndex);
     els.backHomeBtn.onclick = showHomeView;
 
     document.querySelectorAll(".skill-tabs button").forEach(button => {
@@ -1782,7 +1985,7 @@ function playSpinSound() {
         const topics = await loadFromUrl(DATA_SOURCE_URL);
         const lessonCount = topics.reduce((sum, topic) => sum + topic.lessons.length, 0);
         if (!lessonCount) throw new Error("Sheet không có dữ liệu hợp lệ.");
-        setTopics(topics, `Đã tải ${topics.length} chủ đề`);
+        setTopics(topics, `Tất cả có ${topics.length} chủ đề`);
       } catch (err) {
         setStatus(err.message + " Hãy kiểm tra lại link DATA_SOURCE_URL hoặc quyền triển khai Apps Script.", true);
       }
