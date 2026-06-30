@@ -539,6 +539,15 @@
       feedback: document.getElementById("feedback")
     };
 
+const spinAudio = new Audio("spin.mp3");
+spinAudio.volume = 0.45;
+
+function playSpinSound() {
+  spinAudio.currentTime = 0;
+  spinAudio.play().catch(() => {});
+}
+
+
     function currentTopic() {
       return state.topics[state.topicIndex] || { id: "", title: "", lessons: [] };
     }
