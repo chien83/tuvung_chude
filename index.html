@@ -1120,6 +1120,8 @@ function playSpinSound() {
       const words = currentLesson().words;
       if (!words.length) return;
 
+      playSpinSound();
+
       state.isSpinning = true;
       state.spinRevealed = false;
       els.taskImageBox.classList.add("is-spinning");
