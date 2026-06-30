@@ -1371,12 +1371,12 @@
     };
 
     async function bootFromDataSource() {
-      setStatus("Đang tải dữ liệu từ Google Sheet...");
+      setStatus("Đang tải dữ liệu...");
       try {
         const topics = await loadFromUrl(DATA_SOURCE_URL);
         const lessonCount = topics.reduce((sum, topic) => sum + topic.lessons.length, 0);
         if (!lessonCount) throw new Error("Sheet không có dữ liệu hợp lệ.");
-        setTopics(topics, `Đã tải ${topics.length} chủ đề, ${lessonCount} bài từ Google Sheet.`);
+        setTopics(topics, `Đã tải ${topics.length} chủ đề`);
       } catch (err) {
         setStatus(err.message + " Hãy kiểm tra lại link DATA_SOURCE_URL hoặc quyền triển khai Apps Script.", true);
       }
