@@ -1025,6 +1025,76 @@
         font-size: 14px;
       }
     }
+
+
+    /* ===== FINAL FIX: cố định khung học và cân chiều cao 2 khung ===== */
+    @media (min-width: 821px) {
+      .layout {
+        align-items: stretch;
+      }
+
+      .panel,
+      .game {
+        min-height: 650px;
+      }
+
+      .panel {
+        align-self: stretch;
+        height: auto;
+      }
+
+      .game {
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+
+      .stage {
+        height: 100%;
+        align-items: stretch;
+      }
+
+      .task {
+        min-height: 580px;
+        height: 580px;
+        align-content: center;
+        overflow: hidden;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .layout {
+        align-items: stretch;
+      }
+
+      .game,
+      .panel {
+        flex: none;
+      }
+
+      .stage {
+        padding-bottom: 4px;
+      }
+
+      .task {
+        min-height: 545px !important;
+        height: 545px;
+        align-content: center;
+        overflow: hidden;
+      }
+
+      .task-image.is-spinning,
+      .task-image.is-spinning:hover {
+        transform: none;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .task {
+        min-height: 525px !important;
+        height: 525px;
+      }
+    }
+
 </style>
 </head>
 <body>
