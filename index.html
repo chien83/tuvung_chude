@@ -621,6 +621,54 @@
       color: var(--bad);
     }
 
+    .complete-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(12, 28, 52, .38);
+      backdrop-filter: blur(3px);
+    }
+
+    .complete-modal.show {
+      display: flex;
+    }
+
+    .complete-box {
+      width: min(330px, 92vw);
+      padding: 22px 18px 18px;
+      border-radius: 22px;
+      border: 3px solid rgba(255, 255, 255, .85);
+      background: linear-gradient(180deg, #ffffff 0%, #eaf8ff 100%);
+      box-shadow: 0 18px 42px rgba(15, 23, 42, .24), 0 6px 0 rgba(52, 120, 246, .2);
+      text-align: center;
+      animation: completePop .18s ease-out;
+    }
+
+    .complete-message {
+      margin: 0 0 16px;
+      color: #12325b;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .complete-ok {
+      min-width: 96px;
+      min-height: 40px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #3478f6, #25c983);
+      box-shadow: 0 5px 0 #126c54;
+    }
+
+    @keyframes completePop {
+      from { opacity: 0; transform: scale(.94) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
     @media (max-width: 820px) {
       .app {
         width: 100%;
@@ -1250,6 +1298,13 @@
     </section>
   </main>
 
+  <div class="complete-modal" id="completeModal" role="dialog" aria-modal="true" aria-live="polite">
+    <div class="complete-box">
+      <p class="complete-message" id="completeMessage">Xong, học tiếp phần sau!</p>
+      <button class="complete-ok" id="completeOkBtn" type="button">OK</button>
+    </div>
+  </div>
+
   <script>
     // Gan link Apps Script hoac CSV o day roi upload len web.
     const DATA_SOURCE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT2j3WWLHrhmp__1oHnZYCLKINLHYZzDkbsEsxaPoimD3EmHTlQnCbA3eeKauwNsaIx-deX3KRB5BzY/pub?output=csv";
@@ -1300,7 +1355,10 @@
       wordDisplay: document.getElementById("wordDisplay"),
       meaningText: document.getElementById("meaningText"),
       answerArea: document.getElementById("answerArea"),
-      feedback: document.getElementById("feedback")
+      feedback: document.getElementById("feedback"),
+      completeModal: document.getElementById("completeModal"),
+      completeMessage: document.getElementById("completeMessage"),
+      completeOkBtn: document.getElementById("completeOkBtn")
     };
 
 const spinAudio = new Audio("spin.mp3");
@@ -1904,6 +1962,19 @@ function playSpinSound() {
       els.feedback.className = `feedback ${good ? "good" : "bad"}`;
     }
 
+    function showCompleteMessage(message, onOk) {
+      els.completeMessage.textContent = message;
+      els.completeModal.classList.add("show");
+
+      const close = () => {
+        els.completeModal.classList.remove("show");
+        els.completeOkBtn.onclick = null;
+        if (typeof onOk === "function") onOk();
+      };
+
+      els.completeOkBtn.onclick = close;
+    }
+
     function switchMode(mode) {
       state.mode = mode;
       state.spinRevealed = false;
@@ -1920,12 +1991,11 @@ function playSpinSound() {
 
       if (next) {
         window.setTimeout(() => {
-          alert("Xong, học tiếp phần sau");
-          switchMode(next);
+          showCompleteMessage("Xong, học tiếp phần sau!", () => switchMode(next));
         }, 80);
       } else {
         window.setTimeout(() => {
-          alert("Xong bài học");
+          showCompleteMessage("Xong bài học!");
         }, 80);
       }
 
